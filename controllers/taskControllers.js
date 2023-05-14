@@ -55,6 +55,39 @@ const createTask =async (req, res) => {
 
     const { heading, description, token  } = req.body;
     //Write your code here.
+    try {
+        // Verify the token
+        const decodedToken = jwt.verify(token, JWT_SECRET);
+        const creator_id = decodedToken.userId;
+    
+        // Create a new task
+        const task = new Tasks({
+          heading,
+          description,
+          creator_id,
+        });
+    
+        // Save the task
+        await task.save();
+    
+        res.status(200).json({
+          message: 'Task added successfully',
+          task_id: task._id,
+          status: 'success',
+        });
+      } catch (error) {
+        if (error.name === "JsonWebTokenError") {
+          res.status(404).json({
+            status: 'fail',
+            message: 'Invalid token',
+          });
+        } else {
+          res.status(404).json({
+            status: 'fail',
+            message: error.message,
+          });
+        }
+      }
 
 }
 
@@ -101,6 +134,30 @@ const getdetailTask = async (req, res) => {
 
     const task_id = req.body.task_id;
     //Write your code here.
+    try {
+        // Retrieve the task details
+        const task = await Tasks.findById(task_id);
+    
+        if (!task) {
+          throw new Error('Task not found');
+        }
+    
+        res.status(200).json({
+          status: 'success',
+          data: {
+            Status: task.status,
+            _id: task._id,
+            heading: task.heading,
+            description: task.description,
+            creator_id: task.creator_id,
+          },
+        });
+      } catch (error) {
+        res.status(404).json({
+          status: 'fail',
+          message: error.message,
+        });
+      }
 }
 
 module.exports = { createTask, getdetailTask };

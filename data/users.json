@@ -1,1 +1,33 @@
-[]
+[
+    {
+      "name": "Nepram",
+      "email": "nepram@example.com",
+      "password": "password123",
+      "role": "admin"
+    },
+    {
+      "name": "Bob",
+      "email": "bob@example.com",
+      "password": "password456",
+      "role": "user"
+    },
+    {
+      "name": "Charlie",
+      "email": "charlie@example.com",
+      "password": "password789",
+      "role": "user"
+    },
+    {
+      "name": "Thoithoiba",
+      "email": "thoithoiba@example.com",
+      "password": "passwordABC",
+      "role": "admin"
+    },
+    {
+      "name": "Eve",
+      "email": "eve@example.com",
+      "password": "passwordDEF",
+      "role": "user"
+    }
+  ]
+  
